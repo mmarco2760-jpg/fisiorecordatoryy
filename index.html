@@ -1,0 +1,3001 @@
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FisioRecordatorio Pro</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+:root{
+    --azul:#0879c9;
+    --turquesa:#00a99d;
+    --verde:#25a56a;
+    --fondo:#eef8fb;
+    --texto:#17324d;
+    --gris:#71808c;
+    --rojo:#e05252;
+    --amarillo:#ffd85c;
+}
+
+body{
+    background:var(--fondo);
+    color:var(--texto);
+}
+
+.app{
+    max-width:520px;
+    margin:auto;
+    min-height:100vh;
+    padding-bottom:85px;
+}
+
+header{
+    background:linear-gradient(135deg,#0879c9,#00a99d);
+    color:white;
+    padding:25px 20px 28px;
+    border-radius:0 0 30px 30px;
+    box-shadow:0 5px 20px #0879c933;
+}
+
+.header-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+header h1{
+    font-size:27px;
+}
+
+header p{
+    margin-top:7px;
+    opacity:.92;
+}
+
+.header-icon{
+    width:50px;
+    height:50px;
+    background:#ffffff25;
+    border-radius:16px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:28px;
+}
+
+.contenido{
+    padding:18px;
+}
+
+.oculto{
+    display:none!important;
+}
+
+.tarjeta{
+    background:white;
+    border-radius:22px;
+    padding:20px;
+    margin-bottom:16px;
+    box-shadow:0 7px 22px #00467812;
+}
+
+.tarjeta h2{
+    margin-bottom:8px;
+}
+
+.subtitulo{
+    color:var(--gris);
+    line-height:1.45;
+}
+
+button{
+    width:100%;
+    border:0;
+    border-radius:14px;
+    padding:14px;
+    margin-top:10px;
+    background:var(--azul);
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.2s;
+}
+
+button:hover{
+    transform:translateY(-2px);
+}
+
+button:active{
+    transform:scale(.97);
+}
+
+.btn-verde{
+    background:var(--verde);
+}
+
+.btn-rojo{
+    background:var(--rojo);
+}
+
+.btn-gris{
+    background:#edf3f6;
+    color:var(--azul);
+}
+
+.btn-amarillo{
+    background:#e8b800;
+}
+
+.perfil{
+    text-align:center;
+}
+
+.foto{
+    width:100px;
+    height:100px;
+    margin:0 auto 12px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#d7f6f2,#d9efff);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:52px;
+    border:5px solid white;
+    box-shadow:0 5px 18px #00000015;
+}
+
+.badge{
+    display:inline-block;
+    background:#e6f7f3;
+    color:#159a96;
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:bold;
+    margin-top:5px;
+}
+
+.numero{
+    background:#eef8fc;
+    padding:13px;
+    border-radius:13px;
+    margin:15px 0;
+    font-weight:bold;
+}
+
+.recordatorio{
+    background:linear-gradient(135deg,#fff5bd,#ffe27a);
+    border-radius:20px;
+    padding:20px;
+    margin-bottom:16px;
+}
+
+.recordatorio h3{
+    margin-bottom:10px;
+}
+
+.recordatorio-vacio{
+    color:#77651b;
+}
+
+.proxima{
+    background:#e9f8f5;
+    border-left:5px solid var(--turquesa);
+    border-radius:14px;
+    padding:15px;
+    margin-top:12px;
+}
+
+.pasos{
+    display:grid;
+    gap:10px;
+}
+
+.paso{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:12px;
+    background:#f4f9fb;
+    border-radius:14px;
+}
+
+.paso-icon{
+    width:38px;
+    height:38px;
+    border-radius:12px;
+    background:#dff4f2;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:20px;
+}
+
+/* FORMULARIO */
+
+label{
+    display:block;
+    margin-top:15px;
+    margin-bottom:7px;
+    font-weight:bold;
+}
+
+input,
+textarea,
+select{
+    width:100%;
+    padding:13px;
+    border:1px solid #d4dfe4;
+    border-radius:12px;
+    outline:none;
+    font-size:15px;
+    background:white;
+}
+
+input:focus,
+textarea:focus{
+    border-color:var(--azul);
+    box-shadow:0 0 0 3px #0879c91a;
+}
+
+textarea{
+    resize:none;
+}
+
+.horarios{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;
+}
+
+.hora{
+    background:#e9f7f6;
+    color:#087d78;
+    padding:12px 4px;
+    border-radius:11px;
+    text-align:center;
+    font-size:13px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.hora.seleccionada{
+    background:var(--turquesa);
+    color:white;
+}
+
+.hora.ocupada{
+    background:#e4e8ea;
+    color:#92999e;
+    cursor:not-allowed;
+    text-decoration:line-through;
+}
+
+/* CITAS */
+
+.cita{
+    border-left:5px solid var(--azul);
+}
+
+.estado{
+    display:inline-block;
+    background:#dff7e9;
+    color:#21864f;
+    padding:6px 10px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.info-cita{
+    display:grid;
+    gap:7px;
+    margin-top:10px;
+    color:#465967;
+}
+
+.vacio{
+    text-align:center;
+    padding:30px 15px;
+    color:var(--gris);
+}
+
+/* ESTADISTICAS */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:9px;
+    margin:15px 0;
+}
+
+.stat{
+    background:#f1f8fc;
+    border-radius:15px;
+    padding:13px 5px;
+    text-align:center;
+}
+
+.stat strong{
+    display:block;
+    color:var(--azul);
+    font-size:22px;
+}
+
+.stat span{
+    font-size:11px;
+    color:var(--gris);
+}
+
+/* JUEGOS */
+
+.game-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.game{
+    background:white;
+    color:var(--texto);
+    min-height:160px;
+    border-radius:20px;
+    padding:15px 8px;
+    box-shadow:0 5px 17px #00467812;
+}
+
+.game-icon{
+    font-size:46px;
+}
+
+.game h3{
+    margin-top:6px;
+    font-size:17px;
+}
+
+.game p{
+    margin-top:5px;
+    font-size:12px;
+    color:var(--gris);
+    line-height:1.3;
+}
+
+.game-badge{
+    display:inline-block;
+    background:#edf7ff;
+    color:var(--azul);
+    font-size:10px;
+    padding:4px 7px;
+    border-radius:10px;
+    margin-top:7px;
+}
+
+/* JUEGO */
+
+.juego{
+    display:none;
+}
+
+.juego.activo{
+    display:block;
+}
+
+.score{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:#eef8fc;
+    padding:13px 15px;
+    border-radius:14px;
+    margin:13px 0;
+    font-weight:bold;
+}
+
+.score strong{
+    color:var(--azul);
+    font-size:21px;
+}
+
+.mensaje{
+    text-align:center;
+    min-height:32px;
+    padding:10px;
+    font-weight:bold;
+}
+
+canvas{
+    width:100%;
+    height:auto;
+    display:block;
+    border-radius:20px;
+    touch-action:none;
+}
+
+/* REACCION */
+
+.reaction{
+    height:350px;
+    background:#102c40;
+    border-radius:20px;
+    position:relative;
+    overflow:hidden;
+}
+
+.target{
+    position:absolute;
+    width:65px;
+    height:65px;
+    border-radius:50%;
+    background:#28e0af;
+    box-shadow:0 0 25px #28e0af;
+    display:none;
+    cursor:pointer;
+}
+
+.target:after{
+    content:"";
+    position:absolute;
+    width:28px;
+    height:28px;
+    border:3px solid white;
+    border-radius:50%;
+    left:15px;
+    top:15px;
+}
+
+/* BALANCE */
+
+.balance{
+    height:360px;
+    position:relative;
+    overflow:hidden;
+    border-radius:20px;
+    background:linear-gradient(#a9e4ff,#eefcff);
+}
+
+.balance-ground{
+    position:absolute;
+    bottom:0;
+    width:100%;
+    height:75px;
+    background:#8bc99c;
+}
+
+.balance-line{
+    position:absolute;
+    bottom:105px;
+    left:10%;
+    width:80%;
+    height:16px;
+    border-radius:20px;
+    background:#795548;
+    transform:rotate(-2deg);
+}
+
+.balance-player{
+    position:absolute;
+    bottom:112px;
+    left:45%;
+    font-size:54px;
+    transition:.15s;
+}
+
+/* BASKET */
+
+.basket{
+    height:340px;
+    position:relative;
+    overflow:hidden;
+    border-radius:20px;
+    background:linear-gradient(#8ed7ff,#e0f7ff);
+}
+
+.hoop{
+    position:absolute;
+    top:45px;
+    right:40px;
+    font-size:65px;
+}
+
+.ball{
+    width:34px;
+    height:34px;
+    background:#f57c00;
+    border-radius:50%;
+    position:absolute;
+    bottom:30px;
+    left:45%;
+    transition:.5s;
+}
+
+/* MEMORY */
+
+.memory{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:8px;
+}
+
+.memory-card{
+    height:75px;
+    padding:0;
+    margin:0;
+    background:linear-gradient(135deg,#0879c9,#00a99d);
+    font-size:28px;
+}
+
+.memory-card.abierta{
+    background:#eef7fb;
+    color:var(--texto);
+}
+
+/* STRETCH */
+
+.exercise{
+    background:#eff9ff;
+    border-radius:20px;
+    padding:25px;
+    text-align:center;
+}
+
+.exercise-icon{
+    font-size:90px;
+    margin:10px;
+}
+
+/* RUNNER */
+
+.runner{
+    height:320px;
+    position:relative;
+    overflow:hidden;
+    border-radius:20px;
+    background:linear-gradient(#70c9ef,#e7faff);
+}
+
+.runner-ground{
+    position:absolute;
+    bottom:0;
+    width:100%;
+    height:70px;
+    background:#555e64;
+}
+
+.runner-line{
+    position:absolute;
+    bottom:30px;
+    width:100%;
+    border-top:5px dashed white;
+}
+
+.runner-player{
+    position:absolute;
+    left:35px;
+    bottom:70px;
+    font-size:50px;
+    transition:.2s;
+}
+
+.obstaculo{
+    position:absolute;
+    right:35px;
+    bottom:70px;
+    font-size:45px;
+}
+
+/* PREMIO */
+
+.premio{
+    display:none;
+    text-align:center;
+    background:linear-gradient(135deg,#fff2a8,#ffd85c);
+    border-radius:22px;
+    padding:22px;
+    margin-top:16px;
+}
+
+.cupon{
+    background:white;
+    border:2px dashed #c89500;
+    padding:12px;
+    margin-top:12px;
+    border-radius:12px;
+    font-weight:bold;
+    letter-spacing:3px;
+}
+
+/* MENU */
+
+.menu{
+    position:fixed;
+    bottom:0;
+    left:50%;
+    transform:translateX(-50%);
+    width:100%;
+    max-width:520px;
+    background:white;
+    padding:9px 5px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    box-shadow:0 -4px 18px #00000015;
+    z-index:50;
+}
+
+.menu-item{
+    text-align:center;
+    color:#657681;
+    font-size:11px;
+    cursor:pointer;
+}
+
+.menu-item.activo{
+    color:var(--azul);
+    font-weight:bold;
+}
+
+.menu-icon{
+    font-size:21px;
+    margin-bottom:3px;
+}
+
+/* ALERTA */
+
+.alerta{
+    position:fixed;
+    top:20px;
+    left:50%;
+    transform:translateX(-50%) translateY(-120px);
+    width:calc(100% - 30px);
+    max-width:480px;
+    background:#17324d;
+    color:white;
+    padding:16px;
+    border-radius:16px;
+    z-index:200;
+    box-shadow:0 8px 25px #0004;
+    transition:.35s;
+    text-align:center;
+}
+
+.alerta.mostrar{
+    transform:translateX(-50%) translateY(0);
+}
+
+/* PROGRESO */
+
+.progress{
+    height:10px;
+    background:#e5edf0;
+    border-radius:20px;
+    overflow:hidden;
+    margin-top:10px;
+}
+
+.progress-bar{
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg,#0879c9,#00a99d);
+    transition:.3s;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:380px){
+
+.game-grid{
+    grid-template-columns:1fr;
+}
+
+.horarios{
+    grid-template-columns:repeat(2,1fr);
+}
+
+.stats{
+    grid-template-columns:1fr 1fr 1fr;
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<div id="alerta" class="alerta"></div>
+
+<div class="app">
+
+<header>
+
+<div class="header-top">
+
+<div>
+<h1>💙 FisioRecordatorio</h1>
+<p>Tu fisioterapia, más fácil y divertida.</p>
+</div>
+
+<div class="header-icon">
+🩺
+</div>
+
+</div>
+
+</header>
+
+
+<!-- ================= INICIO ================= -->
+
+<section id="inicio" class="contenido">
+
+<div class="tarjeta perfil">
+
+<div class="foto">👩‍⚕️</div>
+
+<h2>Gaby Lourdes Navarro Mamani</h2>
+
+<div class="badge">Fisioterapeuta</div>
+
+<p class="subtitulo" style="margin-top:10px">
+Atención y seguimiento para ayudarte a mantener
+una mejor movilidad y bienestar.
+</p>
+
+<div class="numero">
+📞 944 331 844
+</div>
+
+<a href="tel:944331844">
+<button class="btn-verde">
+📞 Llamar a la fisioterapeuta
+</button>
+</a>
+
+<button onclick="irAgendar()">
+📅 Agendar una cita
+</button>
+
+</div>
+
+
+<div class="recordatorio">
+
+<h3>🔔 Próxima cita</h3>
+
+<div id="recordatorioContenido" class="recordatorio-vacio">
+Aún no tienes ninguna cita agendada.
+</div>
+
+</div>
+
+
+<div class="tarjeta">
+
+<h2>⚡ Acciones rápidas</h2>
+
+<button onclick="irAgendar()">
+📅 Nueva cita
+</button>
+
+<button onclick="irCitas()" class="btn-gris">
+📋 Ver mis citas
+</button>
+
+<button onclick="irJuegos()" class="btn-verde">
+🎮 Jugar FisioGames
+</button>
+
+</div>
+
+
+<div class="tarjeta">
+
+<h2>✨ ¿Cómo funciona?</h2>
+
+<div class="pasos">
+
+<div class="paso">
+<div class="paso-icon">👤</div>
+<div>
+<b>1. Registra tus datos</b>
+<br>
+<small>Completa el formulario.</small>
+</div>
+</div>
+
+<div class="paso">
+<div class="paso-icon">📅</div>
+<div>
+<b>2. Elige una fecha</b>
+<br>
+<small>Selecciona el día de atención.</small>
+</div>
+</div>
+
+<div class="paso">
+<div class="paso-icon">⏰</div>
+<div>
+<b>3. Escoge un horario</b>
+<br>
+<small>Los horarios ocupados aparecen bloqueados.</small>
+</div>
+</div>
+
+<div class="paso">
+<div class="paso-icon">🔔</div>
+<div>
+<b>4. Recibe tu recordatorio</b>
+<br>
+<small>La app mostrará tu próxima cita.</small>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= AGENDAR ================= -->
+
+<section id="agendar" class="contenido oculto">
+
+<div class="tarjeta">
+
+<h2>📅 Agendar cita</h2>
+
+<p class="subtitulo">
+Completa tus datos y selecciona un horario disponible.
+</p>
+
+<label>Nombre completo</label>
+
+<input
+id="nombre"
+type="text"
+placeholder="Ejemplo: Marco Andre"
+maxlength="60"
+>
+
+<label>Número de celular</label>
+
+<input
+id="telefono"
+type="tel"
+placeholder="999 999 999"
+maxlength="15"
+>
+
+<label>Fecha de la cita</label>
+
+<input
+id="fecha"
+type="date"
+>
+
+<label>Horario disponible</label>
+
+<div id="horarios" class="horarios">
+
+<div class="hora" data-hora="8:00 AM">
+8:00 AM
+</div>
+
+<div class="hora" data-hora="9:00 AM">
+9:00 AM
+</div>
+
+<div class="hora" data-hora="10:00 AM">
+10:00 AM
+</div>
+
+<div class="hora" data-hora="11:00 AM">
+11:00 AM
+</div>
+
+<div class="hora" data-hora="2:00 PM">
+2:00 PM
+</div>
+
+<div class="hora" data-hora="3:00 PM">
+3:00 PM
+</div>
+
+<div class="hora" data-hora="4:00 PM">
+4:00 PM
+</div>
+
+<div class="hora" data-hora="5:00 PM">
+5:00 PM
+</div>
+
+<div class="hora" data-hora="6:00 PM">
+6:00 PM
+</div>
+
+</div>
+
+<label>Motivo de la cita</label>
+
+<textarea
+id="motivo"
+rows="3"
+placeholder="Ejemplo: dolor de espalda"
+maxlength="200"
+></textarea>
+
+<button onclick="confirmarCita()">
+✅ Confirmar cita
+</button>
+
+<button class="btn-gris" onclick="irInicio()">
+Cancelar
+</button>
+
+</div>
+
+</section>
+
+
+<!-- ================= CITAS ================= -->
+
+<section id="citas" class="contenido oculto">
+
+<div class="tarjeta">
+
+<h2>📋 Mis citas</h2>
+
+<p class="subtitulo">
+Aquí puedes revisar y cancelar tus citas.
+</p>
+
+</div>
+
+<div id="listaCitas"></div>
+
+</section>
+
+
+<!-- ================= JUEGOS ================= -->
+
+<section id="juegos" class="contenido oculto">
+
+<div id="menuJuegos">
+
+<div class="tarjeta">
+
+<h2>🎮 FisioGames</h2>
+
+<p class="subtitulo">
+Completa retos relacionados con coordinación, reflejos,
+memoria, equilibrio y movimiento.
+</p>
+
+<div class="stats">
+
+<div class="stat">
+<strong id="victorias">0</strong>
+<span>Victorias</span>
+</div>
+
+<div class="stat">
+<strong id="puntos">0</strong>
+<span>Puntos</span>
+</div>
+
+<div class="stat">
+<strong>10%</strong>
+<span>Premio</span>
+</div>
+
+</div>
+
+<div class="progress">
+<div id="barraProgreso" class="progress-bar"></div>
+</div>
+
+</div>
+
+
+<div class="game-grid">
+
+<button class="game" onclick="abrirJuego('tenis')">
+
+<div class="game-icon">🎾</div>
+
+<h3>Tenis Pro</h3>
+
+<p>Golpea la pelota en el momento exacto.</p>
+
+<span class="game-badge">REFLEJOS</span>
+
+</button>
+
+
+<button class="game" onclick="abrirJuego('runner')">
+
+<div class="game-icon">🏃</div>
+
+<h3>Fisio Runner</h3>
+
+<p>Salta los obstáculos y consigue puntos.</p>
+
+<span class="game-badge">MOVIMIENTO</span>
+
+</button>
+
+
+<button class="game" onclick="abrirJuego('reaction')">
+
+<div class="game-icon">⚡</div>
+
+<h3>Reaction Pro</h3>
+
+<p>Toca el objetivo rápidamente.</p>
+
+<span class="game-badge">VELOCIDAD</span>
+
+</button>
+
+
+<button class="game" onclick="abrirJuego('balance')">
+
+<div class="game-icon">🧘</div>
+
+<h3>Balance Pro</h3>
+
+<p>Mantén al personaje en equilibrio.</p>
+
+<span class="game-badge">EQUILIBRIO</span>
+
+</button>
+
+
+<button class="game" onclick="abrirJuego('basket')">
+
+<div class="game-icon">🏀</div>
+
+<h3>Basket Shot</h3>
+
+<p>Controla la potencia del lanzamiento.</p>
+
+<span class="game-badge">COORDINACIÓN</span>
+
+</button>
+
+
+<button class="game" onclick="abrirJuego('memory')">
+
+<div class="game-icon">🧠</div>
+
+<h3>Fisio Memory</h3>
+
+<p>Encuentra las parejas del cuerpo.</p>
+
+<span class="game-badge">MEMORIA</span>
+
+</button>
+
+
+<button class="game" onclick="abrirJuego('stretch')">
+
+<div class="game-icon">🤸</div>
+
+<h3>Stretch Pro</h3>
+
+<p>Completa la rutina de movimientos.</p>
+
+<span class="game-badge">MOVILIDAD</span>
+
+</button>
+
+</div>
+
+
+<div id="premio" class="premio">
+
+<h2>🏆 ¡PREMIO DESBLOQUEADO!</h2>
+
+<p style="margin-top:8px">
+Has ganado una recompensa por completar un reto.
+</p>
+
+<h3 style="margin-top:10px">
+🎁 10% de descuento
+</h3>
+
+<div class="cupon">
+FISIO10
+</div>
+
+</div>
+
+</div>
+
+
+<!-- TENIS -->
+
+<div id="juegoTenis" class="juego">
+
+<div class="tarjeta">
+
+<h2>🎾 Tenis Pro</h2>
+
+<p class="subtitulo">
+Mueve al jugador con el dedo y pulsa GOLPEAR
+cuando la pelota esté cerca.
+</p>
+
+<div class="score">
+<span>🏆 Puntos</span>
+<strong id="tennisScore">0</strong>
+</div>
+
+<canvas
+id="tennisCanvas"
+width="480"
+height="400">
+</canvas>
+
+<button onclick="golpearPelota()">
+🎾 GOLPEAR
+</button>
+
+<div id="tennisMessage" class="mensaje">
+Espera la pelota...
+</div>
+
+<button class="btn-gris" onclick="volverMenuJuegos()">
+⬅️ Volver a FisioGames
+</button>
+
+</div>
+
+</div>
+
+
+<!-- RUNNER -->
+
+<div id="juegoRunner" class="juego">
+
+<div class="tarjeta">
+
+<h2>🏃 Fisio Runner</h2>
+
+<p class="subtitulo">
+Pulsa saltar para superar los obstáculos.
+</p>
+
+<div class="score">
+<span>🏃 Distancia</span>
+<strong id="runnerScore">0 / 10</strong>
+</div>
+
+<div class="runner">
+
+<div class="runner-ground"></div>
+<div class="runner-line"></div>
+
+<div id="runnerPlayer" class="runner-player">
+🏃
+</div>
+
+<div class="obstaculo">
+🪨
+</div>
+
+</div>
+
+<button onclick="saltar()">
+⬆️ SALTAR
+</button>
+
+<div id="runnerMessage" class="mensaje">
+¡Prepárate!
+</div>
+
+<button class="btn-gris" onclick="volverMenuJuegos()">
+⬅️ Volver a FisioGames
+</button>
+
+</div>
+
+</div>
+
+
+<!-- REACTION -->
+
+<div id="juegoReaction" class="juego">
+
+<div class="tarjeta">
+
+<h2>⚡ Reaction Pro</h2>
+
+<p class="subtitulo">
+Toca el círculo verde lo más rápido posible.
+</p>
+
+<div class="score">
+<span>⚡ Aciertos</span>
+<strong id="reactionScore">0 / 10</strong>
+</div>
+
+<div id="reactionArea" class="reaction">
+
+<div id="target" class="target"></div>
+
+</div>
+
+<button onclick="iniciarReaction()">
+⚡ COMENZAR
+</button>
+
+<div id="reactionMessage" class="mensaje">
+Pulsa comenzar.
+</div>
+
+<button class="btn-gris" onclick="volverMenuJuegos()">
+⬅️ Volver a FisioGames
+</button>
+
+</div>
+
+</div>
+
+
+<!-- BALANCE -->
+
+<div id="juegoBalance" class="juego">
+
+<div class="tarjeta">
+
+<h2>🧘 Balance Pro</h2>
+
+<p class="subtitulo">
+Corrige la posición para mantener el equilibrio.
+</p>
+
+<div class="score">
+<span>🧘 Equilibrio</span>
+<strong id="balanceScore">0 / 15</strong>
+</div>
+
+<div class="balance">
+
+<div class="balance-ground"></div>
+<div class="balance-line"></div>
+
+<div
+id="balancePlayer"
+class="balance-player">
+🧍
+</div>
+
+</div>
+
+<button onclick="moverBalance(-1)">
+⬅️ IZQUIERDA
+</button>
+
+<button onclick="moverBalance(1)">
+DERECHA ➡️
+</button>
+
+<div id="balanceMessage" class="mensaje">
+¡Mantén el equilibrio!
+</div>
+
+<button class="btn-gris" onclick="volverMenuJuegos()">
+⬅️ Volver a FisioGames
+</button>
+
+</div>
+
+</div>
+
+
+<!-- BASKET -->
+
+<div id="juegoBasket" class="juego">
+
+<div class="tarjeta">
+
+<h2>🏀 Basket Shot</h2>
+
+<p class="subtitulo">
+Lanza cuando la potencia esté entre 65% y 80%.
+</p>
+
+<div class="score">
+<span>🏀 Canastas</span>
+<strong id="basketScore">0 / 5</strong>
+</div>
+
+<div class="basket">
+
+<div class="hoop">
+🏀
+</div>
+
+<div id="basketBall" class="ball"></div>
+
+</div>
+
+<div class="score">
+<span>Potencia</span>
+<strong id="powerText">50%</strong>
+</div>
+
+<button onclick="lanzarBasket()">
+🏀 LANZAR
+</button>
+
+<div id="basketMessage" class="mensaje">
+Busca la potencia perfecta.
+</div>
+
+<button class="btn-gris" onclick="volverMenuJuegos()">
+⬅️ Volver a FisioGames
+</button>
+
+</div>
+
+</div>
+
+
+<!-- MEMORY -->
+
+<div id="juegoMemory" class="juego">
+
+<div class="tarjeta">
+
+<h2>🧠 Fisio Memory</h2>
+
+<p class="subtitulo">
+Encuentra las 6 parejas relacionadas con el cuerpo.
+</p>
+
+<div class="score">
+<span>🧠 Parejas</span>
+<strong id="memoryScore">0 / 6</strong>
+</div>
+
+<div id="memoryBoard" class="memory"></div>
+
+<div id="memoryMessage" class="mensaje">
+Encuentra las parejas.
+</div>
+
+<button class="btn-gris" onclick="volverMenuJuegos()">
+⬅️ Volver a FisioGames
+</button>
+
+</div>
+
+</div>
+
+
+<!-- STRETCH -->
+
+<div id="juegoStretch" class="juego">
+
+<div class="tarjeta">
+
+<h2>🤸 Stretch Pro</h2>
+
+<p class="subtitulo">
+Completa los 6 movimientos de la rutina.
+</p>
+
+<div class="score">
+<span>🤸 Ejercicios</span>
+<strong id="stretchScore">0 / 6</strong>
+</div>
+
+<div class="exercise">
+
+<div id="exerciseIcon" class="exercise-icon">
+🙆
+</div>
+
+<h3 id="exerciseName">
+Elevación de brazos
+</h3>
+
+<p id="exerciseDescription">
+Activa hombros y brazos.
+</p>
+
+</div>
+
+<button class="btn-verde" onclick="completarEjercicio()">
+✅ COMPLETAR MOVIMIENTO
+</button>
+
+<div id="stretchMessage" class="mensaje">
+Comienza la rutina.
+</div>
+
+<button class="btn-gris" onclick="volverMenuJuegos()">
+⬅️ Volver a FisioGames
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= MENU ================= -->
+
+<nav class="menu">
+
+<div id="menuInicio" class="menu-item activo" onclick="irInicio()">
+<div class="menu-icon">🏠</div>
+Inicio
+</div>
+
+<div id="menuAgendar" class="menu-item" onclick="irAgendar()">
+<div class="menu-icon">➕</div>
+Agendar
+</div>
+
+<div id="menuCitas" class="menu-item" onclick="irCitas()">
+<div class="menu-icon">📋</div>
+Citas
+</div>
+
+<div id="menuJuegos" class="menu-item" onclick="irJuegos()">
+<div class="menu-icon">🎮</div>
+Juegos
+</div>
+
+</nav>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   DATOS Y GUARDADO
+===================================================== */
+
+let citas=JSON.parse(
+localStorage.getItem("fisioCitas") || "[]"
+);
+
+let victorias=
+Number(localStorage.getItem("fisioVictorias") || 0);
+
+let puntos=
+Number(localStorage.getItem("fisioPuntos") || 0);
+
+let horaElegida="";
+
+const horarios=[
+"8:00 AM",
+"9:00 AM",
+"10:00 AM",
+"11:00 AM",
+"2:00 PM",
+"3:00 PM",
+"4:00 PM",
+"5:00 PM",
+"6:00 PM"
+];
+
+function guardarDatos(){
+
+localStorage.setItem(
+"fisioCitas",
+JSON.stringify(citas)
+);
+
+localStorage.setItem(
+"fisioVictorias",
+victorias
+);
+
+localStorage.setItem(
+"fisioPuntos",
+puntos
+);
+
+}
+
+function mostrarAlerta(texto){
+
+const alerta=
+document.getElementById("alerta");
+
+alerta.innerText=texto;
+
+alerta.classList.add("mostrar");
+
+setTimeout(()=>{
+
+alerta.classList.remove("mostrar");
+
+},2500);
+
+}
+
+
+/* =====================================================
+   NAVEGACIÓN
+===================================================== */
+
+function ocultarSecciones(){
+
+[
+"inicio",
+"agendar",
+"citas",
+"juegos"
+].forEach(id=>{
+
+document.getElementById(id)
+.classList.add("oculto");
+
+});
+
+}
+
+function actualizarMenu(activo){
+
+document.querySelectorAll(".menu-item")
+.forEach(item=>{
+item.classList.remove("activo");
+});
+
+document.getElementById(activo)
+.classList.add("activo");
+
+}
+
+function irInicio(){
+
+ocultarSecciones();
+
+document.getElementById("inicio")
+.classList.remove("oculto");
+
+actualizarMenu("menuInicio");
+
+actualizarRecordatorio();
+
+}
+
+function irAgendar(){
+
+ocultarSecciones();
+
+document.getElementById("agendar")
+.classList.remove("oculto");
+
+actualizarMenu("menuAgendar");
+
+actualizarHorarios();
+
+}
+
+function irCitas(){
+
+ocultarSecciones();
+
+document.getElementById("citas")
+.classList.remove("oculto");
+
+actualizarMenu("menuCitas");
+
+mostrarCitas();
+
+}
+
+function irJuegos(){
+
+ocultarSecciones();
+
+document.getElementById("juegos")
+.classList.remove("oculto");
+
+actualizarMenu("menuJuegos");
+
+volverMenuJuegos();
+
+actualizarEstadisticas();
+
+}
+
+
+/* =====================================================
+   CITAS
+===================================================== */
+
+document
+.getElementById("fecha")
+.addEventListener("change",actualizarHorarios);
+
+function seleccionarHora(elemento){
+
+if(elemento.classList.contains("ocupada"))
+return;
+
+document.querySelectorAll(".hora")
+.forEach(h=>{
+h.classList.remove("seleccionada");
+});
+
+elemento.classList.add("seleccionada");
+
+horaElegida=
+elemento.dataset.hora;
+
+}
+
+document.querySelectorAll(".hora")
+.forEach(hora=>{
+
+hora.addEventListener(
+"click",
+()=>seleccionarHora(hora)
+);
+
+});
+
+
+function citasOcupadas(){
+
+let fecha=
+document.getElementById("fecha").value;
+
+return citas
+.filter(c=>c.fecha===fecha)
+.map(c=>c.hora);
+
+}
+
+function actualizarHorarios(){
+
+let ocupadas=citasOcupadas();
+
+document.querySelectorAll(".hora")
+.forEach(hora=>{
+
+let estaOcupada=
+ocupadas.includes(hora.dataset.hora);
+
+hora.classList.toggle(
+"ocupada",
+estaOcupada
+);
+
+if(estaOcupada){
+
+hora.classList.remove("seleccionada");
+
+}
+
+});
+
+if(ocupadas.includes(horaElegida)){
+horaElegida="";
+}
+
+}
+
+function confirmarCita(){
+
+const nombre=
+document.getElementById("nombre").value.trim();
+
+const telefono=
+document.getElementById("telefono").value.trim();
+
+const fecha=
+document.getElementById("fecha").value;
+
+const motivo=
+document.getElementById("motivo").value.trim();
+
+if(!nombre || !telefono || !fecha || !motivo){
+
+mostrarAlerta(
+"⚠️ Completa todos los campos."
+);
+
+return;
+
+}
+
+if(!horaElegida){
+
+mostrarAlerta(
+"⏰ Selecciona un horario."
+);
+
+return;
+
+}
+
+const hoy=
+new Date().toISOString().split("T")[0];
+
+if(fecha<hoy){
+
+mostrarAlerta(
+"📅 Selecciona una fecha válida."
+);
+
+return;
+
+}
+
+if(citas.some(
+c=>c.fecha===fecha &&
+c.hora===horaElegida
+)){
+
+mostrarAlerta(
+"❌ Ese horario ya está ocupado."
+);
+
+actualizarHorarios();
+
+return;
+
+}
+
+const nuevaCita={
+id:Date.now(),
+nombre,
+telefono,
+fecha,
+hora:horaElegida,
+motivo
+};
+
+citas.push(nuevaCita);
+
+citas.sort(
+(a,b)=>
+(a.fecha+a.hora)
+.localeCompare(b.fecha+b.hora)
+);
+
+guardarDatos();
+
+mostrarAlerta(
+"✅ ¡Cita agendada correctamente!"
+);
+
+document.getElementById("nombre").value="";
+document.getElementById("telefono").value="";
+document.getElementById("fecha").value="";
+document.getElementById("motivo").value="";
+
+horaElegida="";
+
+document.querySelectorAll(".hora")
+.forEach(h=>{
+h.classList.remove("seleccionada");
+});
+
+actualizarRecordatorio();
+
+setTimeout(irInicio,600);
+
+}
+
+
+function actualizarRecordatorio(){
+
+const contenedor=
+document.getElementById("recordatorioContenido");
+
+if(citas.length===0){
+
+contenedor.className="recordatorio-vacio";
+
+contenedor.innerHTML=
+"Aún no tienes ninguna cita agendada.";
+
+return;
+
+}
+
+let proxima=
+obtenerProximaCita();
+
+if(!proxima){
+
+contenedor.className="recordatorio-vacio";
+
+contenedor.innerHTML=
+"No tienes citas próximas.";
+
+return;
+
+}
+
+contenedor.className="proxima";
+
+contenedor.innerHTML=`
+
+<strong>🔔 ¡No olvides tu cita!</strong>
+
+<br><br>
+
+👤 ${proxima.nombre}<br>
+👩‍⚕️ Gaby Lourdes Navarro Mamani<br>
+📅 ${formatearFecha(proxima.fecha)}<br>
+⏰ ${proxima.hora}<br>
+📝 ${proxima.motivo}
+
+`;
+
+}
+
+
+function obtenerProximaCita(){
+
+const hoy=
+new Date().toISOString().split("T")[0];
+
+return citas
+.filter(c=>c.fecha>=hoy)
+.sort(
+(a,b)=>
+(a.fecha+a.hora)
+.localeCompare(b.fecha+b.hora)
+)[0];
+
+}
+
+
+function formatearFecha(fecha){
+
+const partes=fecha.split("-");
+
+return partes[2]+"/"+partes[1]+"/"+partes[0];
+
+}
+
+
+function mostrarCitas(){
+
+const lista=
+document.getElementById("listaCitas");
+
+if(citas.length===0){
+
+lista.innerHTML=`
+
+<div class="tarjeta vacio">
+
+<div style="font-size:50px">
+📅
+</div>
+
+<h3>No tienes citas</h3>
+
+<p style="margin-top:8px">
+Agenda tu primera cita de fisioterapia.
+</p>
+
+<button onclick="irAgendar()">
+➕ Agendar cita
+</button>
+
+</div>
+
+`;
+
+return;
+
+}
+
+lista.innerHTML="";
+
+citas.forEach((cita,index)=>{
+
+lista.innerHTML+=`
+
+<div class="tarjeta cita">
+
+<span class="estado">
+● Cita registrada
+</span>
+
+<h3>🩺 Fisioterapia</h3>
+
+<div class="info-cita">
+
+<div>👤 <b>Paciente:</b> ${cita.nombre}</div>
+
+<div>📱 <b>Celular:</b> ${cita.telefono}</div>
+
+<div>👩‍⚕️ <b>Profesional:</b> Gaby Lourdes Navarro Mamani</div>
+
+<div>📅 <b>Fecha:</b> ${formatearFecha(cita.fecha)}</div>
+
+<div>⏰ <b>Hora:</b> ${cita.hora}</div>
+
+<div>📝 <b>Motivo:</b> ${cita.motivo}</div>
+
+</div>
+
+<button
+class="btn-rojo"
+onclick="cancelarCita(${index})">
+❌ Cancelar cita
+</button>
+
+</div>
+
+`;
+
+});
+
+}
+
+
+function cancelarCita(index){
+
+if(!confirm(
+"¿Seguro que quieres cancelar esta cita?"
+))
+return;
+
+citas.splice(index,1);
+
+guardarDatos();
+
+mostrarCitas();
+actualizarRecordatorio();
+
+mostrarAlerta(
+"❌ La cita fue cancelada."
+);
+
+}
+
+
+/* =====================================================
+   ESTADÍSTICAS
+===================================================== */
+
+function actualizarEstadisticas(){
+
+document.getElementById("victorias")
+.innerText=victorias;
+
+document.getElementById("puntos")
+.innerText=puntos;
+
+let porcentaje=
+Math.min(victorias*10,100);
+
+document.getElementById("barraProgreso")
+.style.width=porcentaje+"%";
+
+}
+
+
+/* =====================================================
+   JUEGOS
+===================================================== */
+
+const juegosIds=[
+"juegoTenis",
+"juegoRunner",
+"juegoReaction",
+"juegoBalance",
+"juegoBasket",
+"juegoMemory",
+"juegoStretch"
+];
+
+function abrirJuego(juego){
+
+document.getElementById("menuJuegos")
+.style.display="none";
+
+juegosIds.forEach(id=>{
+
+document.getElementById(id)
+.classList.remove("activo");
+
+});
+
+document.getElementById(
+"juego"+
+juego.charAt(0).toUpperCase()+
+juego.slice(1)
+).classList.add("activo");
+
+if(juego==="tenis")
+iniciarTenis();
+
+if(juego==="memory")
+iniciarMemory();
+
+}
+
+function volverMenuJuegos(){
+
+juegosIds.forEach(id=>{
+
+document.getElementById(id)
+.classList.remove("activo");
+
+});
+
+document.getElementById("menuJuegos")
+.style.display="block";
+
+}
+
+
+/* =====================================================
+   GANAR
+===================================================== */
+
+function ganarJuego(){
+
+victorias++;
+puntos+=100;
+
+guardarDatos();
+actualizarEstadisticas();
+
+if(victorias===1 ||
+victorias%3===0){
+
+document.getElementById("premio")
+.style.display="block";
+
+mostrarAlerta(
+"🏆 ¡Ganaste! +100 puntos"
+);
+
+}
+
+}
+
+
+/* =====================================================
+   TENIS
+===================================================== */
+
+const canvas=
+document.getElementById("tennisCanvas");
+
+const ctx=
+canvas.getContext("2d");
+
+let pelotaX=240;
+let pelotaY=70;
+let pelotaVX=3;
+let pelotaVY=4;
+let jugadorX=240;
+let tennisPuntos=0;
+let tenisActivo=false;
+
+function iniciarTenis(){
+
+pelotaX=240;
+pelotaY=70;
+pelotaVX=3;
+pelotaVY=4;
+jugadorX=240;
+tennisPuntos=0;
+tenisActivo=true;
+
+document.getElementById("tennisScore")
+.innerText="0";
+
+document.getElementById("tennisMessage")
+.innerText=
+"Espera la pelota...";
+
+requestAnimationFrame(bucleTenis);
+
+}
+
+function bucleTenis(){
+
+if(!tenisActivo)
+return;
+
+ctx.clearRect(
+0,0,canvas.width,canvas.height
+);
+
+ctx.fillStyle="#43a85c";
+
+ctx.fillRect(
+0,0,canvas.width,canvas.height
+);
+
+ctx.strokeStyle="white";
+ctx.lineWidth=5;
+
+ctx.strokeRect(
+15,15,450,370
+);
+
+ctx.beginPath();
+
+ctx.moveTo(15,200);
+ctx.lineTo(465,200);
+
+ctx.stroke();
+
+ctx.fillStyle="#ffffffcc";
+
+ctx.fillRect(
+0,196,480,8
+);
+
+ctx.font="46px Arial";
+
+ctx.fillText(
+"🏃",
+jugadorX-23,
+365
+);
+
+ctx.beginPath();
+
+ctx.arc(
+pelotaX,
+pelotaY,
+11,
+0,
+Math.PI*2
+);
+
+ctx.fillStyle="#eaff28";
+ctx.fill();
+
+pelotaX+=pelotaVX;
+pelotaY+=pelotaVY;
+
+if(
+pelotaX<20 ||
+pelotaX>460
+){
+
+pelotaVX*=-1;
+
+}
+
+if(pelotaY<25){
+
+pelotaVY=
+Math.abs(pelotaVY);
+
+}
+
+if(pelotaY>350){
+
+tenisActivo=false;
+
+document.getElementById(
+"tennisMessage"
+).innerText=
+"❌ Fallaste. Inténtalo nuevamente.";
+
+}
+
+requestAnimationFrame(bucleTenis);
+
+}
+
+canvas.addEventListener(
+"pointermove",
+function(e){
+
+const rect=
+canvas.getBoundingClientRect();
+
+jugadorX=
+(e.clientX-rect.left)*
+(canvas.width/rect.width);
+
+}
+);
+
+function golpearPelota(){
+
+if(!tenisActivo)
+return;
+
+let distancia=
+Math.abs(pelotaX-jugadorX);
+
+if(
+pelotaY>275 &&
+distancia<80
+){
+
+tennisPuntos++;
+
+document.getElementById(
+"tennisScore"
+).innerText=
+tennisPuntos;
+
+pelotaVY=
+-Math.abs(pelotaVY)-.4;
+
+pelotaY=275;
+
+pelotaVX+=
+(Math.random()-.5)*2;
+
+jugadorX=pelotaX;
+
+document.getElementById(
+"tennisMessage"
+).innerText=
+"🔥 ¡Buen golpe!";
+
+if(tennisPuntos>=10){
+
+tenisActivo=false;
+
+document.getElementById(
+"tennisMessage"
+).innerText=
+"🏆 ¡PARTIDO GANADO!";
+
+ganarJuego();
+
+}
+
+}else{
+
+document.getElementById(
+"tennisMessage"
+).innerText=
+"😬 ¡Fallaste!";
+
+}
+
+}
+
+
+/* =====================================================
+   RUNNER
+===================================================== */
+
+let runnerPuntos=0;
+let saltando=false;
+
+function resetRunner(){
+
+runnerPuntos=0;
+saltando=false;
+
+document.getElementById(
+"runnerScore"
+).innerText="0 / 10";
+
+document.getElementById(
+"runnerPlayer"
+).style.bottom="70px";
+
+document.getElementById(
+"runnerMessage"
+).innerText=
+"¡Prepárate!";
+
+}
+
+function saltar(){
+
+if(
+saltando ||
+runnerPuntos>=10
+)
+return;
+
+saltando=true;
+
+const jugador=
+document.getElementById(
+"runnerPlayer"
+);
+
+jugador.style.bottom="175px";
+
+setTimeout(()=>{
+
+jugador.style.bottom="70px";
+saltando=false;
+
+},450);
+
+runnerPuntos++;
+
+document.getElementById(
+"runnerScore"
+).innerText=
+runnerPuntos+" / 10";
+
+if(runnerPuntos>=10){
+
+document.getElementById(
+"runnerMessage"
+).innerText=
+"🏆 ¡CARRERA COMPLETADA!";
+
+ganarJuego();
+
+}else{
+
+document.getElementById(
+"runnerMessage"
+).innerText=
+"🔥 ¡Obstáculo superado!";
+
+}
+
+}
+
+
+/* =====================================================
+   REACTION
+===================================================== */
+
+let reactionPuntos=0;
+let reactionTimer;
+let reactionInicio=0;
+
+function iniciarReaction(){
+
+reactionPuntos=0;
+
+document.getElementById(
+"reactionScore"
+).innerText="0 / 10";
+
+document.getElementById(
+"reactionMessage"
+).innerText=
+"¡Prepárate!";
+
+siguienteObjetivo();
+
+}
+
+function siguienteObjetivo(){
+
+const target=
+document.getElementById("target");
+
+const area=
+document.getElementById("reactionArea");
+
+target.style.display="block";
+
+target.style.left=
+Math.random()*
+(area.clientWidth-70)+"px";
+
+target.style.top=
+Math.random()*
+(area.clientHeight-70)+"px";
+
+reactionInicio=
+performance.now();
+
+clearTimeout(reactionTimer);
+
+reactionTimer=
+setTimeout(()=>{
+
+target.style.display="none";
+
+document.getElementById(
+"reactionMessage"
+).innerText=
+"⏱️ ¡Muy lento!";
+
+},1800);
+
+}
+
+document.getElementById(
+"target"
+).addEventListener(
+"pointerdown",
+function(){
+
+clearTimeout(reactionTimer);
+
+let tiempo=Math.round(
+performance.now()-reactionInicio
+);
+
+reactionPuntos++;
+
+this.style.display="none";
+
+document.getElementById(
+"reactionScore"
+).innerText=
+reactionPuntos+" / 10";
+
+document.getElementById(
+"reactionMessage"
+).innerText=
+"⚡ "+tiempo+" ms";
+
+if(reactionPuntos>=10){
+
+document.getElementById(
+"reactionMessage"
+).innerText=
+"🏆 ¡REFLEJOS INCREÍBLES!";
+
+ganarJuego();
+
+}else{
+
+setTimeout(
+siguienteObjetivo,
+250
+);
+
+}
+
+}
+);
+
+
+/* =====================================================
+   BALANCE
+===================================================== */
+
+let balancePuntos=0;
+let balancePos=50;
+
+function resetBalance(){
+
+balancePuntos=0;
+balancePos=50;
+
+document.getElementById(
+"balancePlayer"
+).style.left="45%";
+
+document.getElementById(
+"balanceScore"
+).innerText="0 / 15";
+
+}
+
+function moverBalance(dir){
+
+if(balancePuntos>=15)
+return;
+
+balancePos+=dir*5;
+
+balancePos=
+Math.max(15,
+Math.min(85,balancePos));
+
+document.getElementById(
+"balancePlayer"
+).style.left=
+balancePos+"%";
+
+balancePuntos++;
+
+document.getElementById(
+"balanceScore"
+).innerText=
+balancePuntos+" / 15";
+
+if(
+Math.abs(balancePos-50)>30
+){
+
+document.getElementById(
+"balanceMessage"
+).innerText=
+"⚠️ Corrige tu posición.";
+
+}else{
+
+document.getElementById(
+"balanceMessage"
+).innerText=
+"✅ ¡Muy bien!";
+
+}
+
+if(balancePuntos>=15){
+
+document.getElementById(
+"balanceMessage"
+).innerText=
+"🏆 ¡EQUILIBRIO PERFECTO!";
+
+ganarJuego();
+
+}
+
+}
+
+
+/* =====================================================
+   BASKET
+===================================================== */
+
+let basketPuntos=0;
+let potencia=0;
+let potenciaDireccion=1;
+
+setInterval(()=>{
+
+potencia+=
+potenciaDireccion*5;
+
+if(potencia>=100){
+
+potencia=100;
+potenciaDireccion=-1;
+
+}
+
+if(potencia<=0){
+
+potencia=0;
+potenciaDireccion=1;
+
+}
+
+document.getElementById(
+"powerText"
+).innerText=
+potencia+"%";
+
+},80);
+
+function resetBasket(){
+
+basketPuntos=0;
+
+document.getElementById(
+"basketScore"
+).innerText="0 / 5";
+
+document.getElementById(
+"basketMessage"
+).innerText=
+"Busca la potencia perfecta.";
+
+document.getElementById(
+"basketBall"
+).style.bottom="30px";
+
+document.getElementById(
+"basketBall"
+).style.left="45%";
+
+}
+
+function lanzarBasket(){
+
+if(basketPuntos>=5)
+return;
+
+const pelota=
+document.getElementById(
+"basketBall"
+);
+
+if(
+potencia>=65 &&
+potencia<=80
+){
+
+basketPuntos++;
+
+document.getElementById(
+"basketScore"
+).innerText=
+basketPuntos+" / 5";
+
+pelota.style.bottom="250px";
+pelota.style.left="70%";
+
+setTimeout(()=>{
+
+pelota.style.bottom="30px";
+pelota.style.left="45%";
+
+},700);
+
+document.getElementById(
+"basketMessage"
+).innerText=
+"🏀 ¡CANASTA!";
+
+if(basketPuntos>=5){
+
+document.getElementById(
+"basketMessage"
+).innerText=
+"🏆 ¡5 DE 5!";
+
+ganarJuego();
+
+}
+
+}else{
+
+document.getElementById(
+"basketMessage"
+).innerText=
+"❌ Prueba con 65%-80%.";
+
+pelota.style.bottom="120px";
+
+setTimeout(()=>{
+
+pelota.style.bottom="30px";
+
+},400);
+
+}
+
+}
+
+
+/* =====================================================
+   MEMORY
+===================================================== */
+
+const valoresMemory=[
+"🦵","🦵",
+"💪","💪",
+"🏃","🏃",
+"🧘","🧘",
+"🧠","🧠",
+"🫀","🫀"
+];
+
+let primera=null;
+let segunda=null;
+let bloqueado=false;
+let parejas=0;
+
+function iniciarMemory(){
+
+const board=
+document.getElementById(
+"memoryBoard"
+);
+
+board.innerHTML="";
+
+primera=null;
+segunda=null;
+bloqueado=false;
+parejas=0;
+
+document.getElementById(
+"memoryScore"
+).innerText="0 / 6";
+
+let cartas=
+[...valoresMemory];
+
+cartas.sort(
+()=>Math.random()-.5
+);
+
+cartas.forEach(valor=>{
+
+const carta=
+document.createElement("button");
+
+carta.className=
+"memory-card";
+
+carta.innerText="❔";
+
+carta.dataset.valor=valor;
+
+carta.onclick=()=>{
+voltearCarta(carta);
+};
+
+board.appendChild(carta);
+
+});
+
+}
+
+function voltearCarta(carta){
+
+if(
+bloqueado ||
+carta===primera ||
+carta.classList.contains("abierta")
+)
+return;
+
+carta.classList.add("abierta");
+
+carta.innerText=
+carta.dataset.valor;
+
+if(!primera){
+
+primera=carta;
+return;
+
+}
+
+segunda=carta;
+bloqueado=true;
+
+if(
+primera.dataset.valor===
+segunda.dataset.valor
+){
+
+parejas++;
+
+document.getElementById(
+"memoryScore"
+).innerText=
+parejas+" / 6";
+
+primera=null;
+segunda=null;
+bloqueado=false;
+
+if(parejas===6){
+
+document.getElementById(
+"memoryMessage"
+).innerText=
+"🏆 ¡MEMORIA COMPLETADA!";
+
+ganarJuego();
+
+}
+
+}else{
+
+setTimeout(()=>{
+
+primera.classList.remove(
+"abierta"
+);
+
+segunda.classList.remove(
+"abierta"
+);
+
+primera.innerText="❔";
+segunda.innerText="❔";
+
+primera=null;
+segunda=null;
+bloqueado=false;
+
+},700);
+
+}
+
+}
+
+
+/* =====================================================
+   STRETCH
+===================================================== */
+
+let stretchPuntos=0;
+
+const ejercicios=[
+
+[
+"🙆",
+"Elevación de brazos",
+"Activa hombros y brazos."
+],
+
+[
+"🦵",
+"Estiramiento de piernas",
+"Trabaja la movilidad."
+],
+
+[
+"🤸",
+"Movilidad de espalda",
+"Realiza un movimiento suave."
+],
+
+[
+"🧘",
+"Postura de equilibrio",
+"Mantén una postura estable."
+],
+
+[
+"💪",
+"Activación muscular",
+"Prepara los músculos."
+],
+
+[
+"🏃",
+"Movimiento final",
+"Completa la rutina."
+]
+
+];
+
+function resetStretch(){
+
+stretchPuntos=0;
+
+document.getElementById(
+"stretchScore"
+).innerText="0 / 6";
+
+document.getElementById(
+"exerciseIcon"
+).innerText="🙆";
+
+document.getElementById(
+"exerciseName"
+).innerText=
+"Elevación de brazos";
+
+document.getElementById(
+"exerciseDescription"
+).innerText=
+"Activa hombros y brazos.";
+
+document.getElementById(
+"stretchMessage"
+).innerText=
+"Comienza la rutina.";
+
+}
+
+function completarEjercicio(){
+
+if(stretchPuntos>=6)
+return;
+
+stretchPuntos++;
+
+document.getElementById(
+"stretchScore"
+).innerText=
+stretchPuntos+" / 6";
+
+if(stretchPuntos<6){
+
+const ejercicio=
+ejercicios[stretchPuntos];
+
+document.getElementById(
+"exerciseIcon"
+).innerText=
+ejercicio[0];
+
+document.getElementById(
+"exerciseName"
+).innerText=
+ejercicio[1];
+
+document.getElementById(
+"exerciseDescription"
+).innerText=
+ejercicio[2];
+
+document.getElementById(
+"stretchMessage"
+).innerText=
+"✅ Movimiento completado.";
+
+}else{
+
+document.getElementById(
+"exerciseIcon"
+).innerText="🏆";
+
+document.getElementById(
+"exerciseName"
+).innerText=
+"¡Rutina completada!";
+
+document.getElementById(
+"exerciseDescription"
+).innerText=
+"Excelente trabajo.";
+
+document.getElementById(
+"stretchMessage"
+).innerText=
+"🔥 ¡COMPLETASTE TODO!";
+
+ganarJuego();
+
+}
+
+}
+
+
+/* =====================================================
+   INICIAR JUEGOS AL ABRIR
+===================================================== */
+
+function prepararJuego(id){
+
+if(id==="runner")
+resetRunner();
+
+if(id==="balance")
+resetBalance();
+
+if(id==="basket")
+resetBasket();
+
+if(id==="stretch")
+resetStretch();
+
+if(id==="reaction")
+iniciarReaction();
+
+if(id==="memory")
+iniciarMemory();
+
+}
+
+
+/* Reemplaza la apertura para preparar correctamente cada juego */
+
+const abrirJuegoOriginal=abrirJuego;
+
+abrirJuego=function(juego){
+
+abrirJuegoOriginal(juego);
+
+prepararJuego(juego);
+
+};
+
+actualizarRecordatorio();
+actualizarEstadisticas();
+
+</script>
+
+</body>
+</html>
+```
+
